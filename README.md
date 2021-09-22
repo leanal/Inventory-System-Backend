@@ -4,7 +4,7 @@ with Nodemon
 ## npm run dev
 
 ### Deployed Version:
-Heroku: intense-crag-59083
+https://intense-crag-59083.herokuapp.com/
 
 Installation:
 Express - web framework for Node.js
