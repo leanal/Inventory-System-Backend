@@ -7,7 +7,6 @@ const addCategory = mapProperties({
   category_description: "category.category_description",
 });
 
-
 function list() {
   return knex("products").select("*");
 }
@@ -22,16 +21,32 @@ function read(product_id) {
     .then(addCategory);
 }
 
-function listOutOfStockCount() {
+function readName(product_name) {
+    return knex("products as p")
+      .join("products_categories as pc", "p.product_id", "pc.product_id")
+      .join("categories as c", "pc.category_id", "c.category_id")
+      .select("p.*", "c.*")
+      .where({ "p.product_name": product_name })
+      .first()
+      .then(addCategory);
+  }
+
+function listOutOfStockProducts() {
   return knex("products")
-    .select("product_quantity_in_stock as out_of_stock")
-    .count("product_id")
-    .where({ product_quantity_in_stock: 0 })
-    .groupBy("out_of_stock");
+    .select("*")
+    .where({ "product_quantity_in_stock": "0" })
 }
 
+function create (product) {
+    return knex("products")
+        .insert(product)
+        .returning("*")
+        .then(updatedRecords => updatedRecords[0])
+}
 module.exports = {
   list,
   read,
-  listOutOfStockCount,
+  readName,
+  listOutOfStockProducts,
+  create
 };

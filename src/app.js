@@ -1,13 +1,26 @@
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
+const productsRouter = require("./products/products.router");
+// const categoriesRouter = require("./categories/categories.router");
+const suppliersRouter = require("./suppliers/suppliers.router");
 
 app.use(morgan("dev"));
+app.use(express.json());
 
-const sayHello = (req, res, next) => {
-  res.send("Hello! Leana is working on something BIG!");
-};
+app.use("/products", productsRouter);
+app.use("/suppliers", suppliersRouter);
 
-app.use(sayHello);
+// Not found handler
+app.use((req, res, next) => {
+  next({ status: 404, message: `Not found: ${req.originalUrl}` });
+});
+
+// Error handler
+app.use((error, req, res, next) => {
+  console.error(error);
+  const { status = 500, message = "Something went wrong!" } = error;
+  res.status(status).json({ error: message });
+});
 
 module.exports = app;
