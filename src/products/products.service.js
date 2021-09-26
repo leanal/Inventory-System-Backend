@@ -43,10 +43,19 @@ function create (product) {
         .returning("*")
         .then(updatedRecords => updatedRecords[0])
 }
+
+function update(product) {
+    return knex("products")
+        .where("product_id", product.product_id)
+        .update(product)
+        .returning("*")
+}
+
 module.exports = {
   list,
   read,
   readName,
   listOutOfStockProducts,
-  create
+  create,
+  update
 };

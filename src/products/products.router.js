@@ -11,6 +11,7 @@ router
 router
     .route("/:productId([0-9]+)")
     .get(controller.read)
+    .put(controller.update)
     .all(methodNotAllowed)
 
 router
