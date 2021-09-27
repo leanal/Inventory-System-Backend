@@ -22,9 +22,6 @@ function read(req, res) {
 
 async function listOutOfStockProducts(req, res, next) {
   let outOfStockProducts = await productsService.listOutOfStockProducts();
-  if (outOfStockProducts.length === 0) {
-    outOfStockProducts = "All products are in stock";
-  }
   res.json({ data: outOfStockProducts });
 }
 
@@ -50,7 +47,7 @@ async function update(req, res) {
     product_id: res.locals.product.product_id,
   };
   const [data] = await productsService.update(updatedProduct);
-  res.json({ data: data });
+  res.json({ data: data }); 
 }
 
 module.exports = {

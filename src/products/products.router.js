@@ -15,7 +15,7 @@ router
     .all(methodNotAllowed)
 
 router
-    .route("/out-of-stock-count")
+    .route("/out-of-stock-products")
     .get(controller.listOutOfStockProducts)
     .all(methodNotAllowed)
 
